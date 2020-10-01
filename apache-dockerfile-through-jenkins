@@ -1,0 +1,56 @@
+Apache with Docker 
+
+
+
+cd /home/docker/apache
+
+docker build -t apache:manish .
+docker run -itd --name apache -p 8091:8091  apache:manish
+
+
+
+mkdir -p /home/docker/ravi
+chmod -R 775 /home/docker/ravi
+touch /home/docker/ravi/Dockerfile
+chmod -R 775 /home/docker/ravi/Dockerfile
+echo "FROM    centos:7" >> /home/docker/ravi/Dockerfile
+echo "RUN yum -y update" >> /home/docker/ravi/Dockerfile
+echo "RUN yum install -y httpd httpd-tools" >> /home/docker/ravi/Dockerfile
+echo "RUN yum install -y lynx wget rsync vim bash-completion curl unzip net-tools" >> /home/docker/ravi/Dockerfile
+echo "EXPOSE  8091" >> /home/docker/ravi/Dockerfile
+echo "RUN adduser slxtest" >> /home/docker/ravi/Dockerfile
+echo "RUN mkdir -p /home/slxtest/{backup,public_html,logs,tmp}" >> /home/docker/ravi/Dockerfile
+echo "RUN touch /home/slxtest/public_html/index.html" >> /home/docker/ravi/Dockerfile
+echo 'RUN echo "this is the docker apache test page for slxtest.baryons.net site......" > /home/slxtest/public_html/index.html' >> /home/docker/ravi/Dockerfile
+echo "RUN chown -R slxtest:slxtest /home/slxtest/*" >> /home/docker/ravi/Dockerfile 
+echo "RUN chmod -R 755 /home/*" >> /home/docker/ravi/Dockerfile
+echo "RUN chmod -R 775 /home/slxtest/*" >> /home/docker/ravi/Dockerfile
+echo "RUN sed -i 's/Listen 80/Listen 8091/g' /etc/httpd/conf/httpd.conf" >> /home/docker/ravi/Dockerfile
+echo "RUN sed -i 's/DirectoryIndex index.html/DirectoryIndex index.html index.php/g' /etc/httpd/conf/httpd.conf" >> /home/docker/ravi/Dockerfile
+echo 'RUN echo " " >> /etc/httpd/conf/httpd.conf' >> /home/docker/ravi/Dockerfile
+echo 'RUN echo "## Cross Origin Enabled" >> /etc/httpd/conf/httpd.conf' >> /home/docker/ravi/Dockerfile
+
+echo 'RUN echo " " >> /etc/httpd/conf/httpd.conf' >> /home/docker/ravi/Dockerfile
+echo 'RUN echo "KeepAlive on" >> /etc/httpd/conf/httpd.conf' >> /home/docker/ravi/Dockerfile
+echo 'RUN echo "KeepAliveTimeout 7" >> /etc/httpd/conf/httpd.conf' >> /home/docker/ravi/Dockerfile
+echo 'RUN echo " " >> /etc/httpd/conf/httpd.conf' >> /home/docker/ravi/Dockerfile
+echo 'RUN echo "##################################" >> /etc/httpd/conf/httpd.conf' >> /home/docker/ravi/Dockerfile
+echo 'RUN echo "<VirtualHost *:8091>" >> /etc/httpd/conf/httpd.conf' >> /home/docker/ravi/Dockerfile
+echo 'RUN echo "DocumentRoot /var/www/html" >> /etc/httpd/conf/httpd.conf' >> /home/docker/ravi/Dockerfile
+echo 'RUN echo "ServerName 172.105.51.125" >> /etc/httpd/conf/httpd.conf' >> /home/docker/ravi/Dockerfile
+echo 'RUN echo "</VirtualHost>" >> /etc/httpd/conf/httpd.conf' >> /home/docker/ravi/Dockerfile
+echo "RUN sed -i 's/AllowOverride FileInfo AuthConfig Limit Indexes/#    AllowOverride FileInfo AuthConfig Limit Indexes/g' /etc/httpd/conf.d/userdir.conf" >> /home/docker/ravi/Dockerfile
+echo "RUN sed -i 's/Options MultiViews Indexes SymLinksIfOwnerMatch IncludesNoExec/AllowOverride all/g' /etc/httpd/conf.d/userdir.conf" >> /home/docker/ravi/Dockerfile
+echo "RUN sed -i 's/Require method GET POST OPTIONS/Require all granted/g' /etc/httpd/conf.d/userdir.conf" >> /home/docker/ravi/Dockerfile
+echo "RUN sed -i 's/UserDir disabled/# UserDir disabled/g' /etc/httpd/conf.d/userdir.conf" >> /home/docker/ravi/Dockerfile
+echo "RUN sed -i 's/#UserDir public_html/UserDir public_html/g' /etc/httpd/conf.d/userdir.conf" >> /home/docker/ravi/Dockerfile
+echo "RUN touch /etc/httpd/conf.d/slxtest.conf" >> /home/docker/ravi/Dockerfile
+echo 'RUN echo "##### slxtest.baryons.net ###########" >> /etc/httpd/conf.d/slxtest.conf' >> /home/docker/ravi/Dockerfile
+echo 'RUN echo "<VirtualHost *:8091>" >> /etc/httpd/conf.d/slxtest.conf' >> /home/docker/ravi/Dockerfile
+echo 'RUN echo "       DocumentRoot    /home/slxtest/public_html" >> /etc/httpd/conf.d/slxtest.conf' >> /home/docker/ravi/Dockerfile
+echo 'RUN echo "       ServerName      172.105.51.125" >> /etc/httpd/conf.d/slxtest.conf' >> /home/docker/ravi/Dockerfile
+echo 'RUN echo "       ErrorLog        /home/slxtest/logs/edflix-error_log" >> /etc/httpd/conf.d/slxtest.conf' >> /home/docker/ravi/Dockerfile
+echo 'RUN echo "       TransferLog     /home/slxtest/logs/edflix-access_log" >> /etc/httpd/conf.d/slxtest.conf' >> /home/docker/ravi/Dockerfile
+echo 'RUN echo "</VirtualHost>" >> /etc/httpd/conf.d/slxtest.conf' >> /home/docker/ravi/Dockerfile
+echo 'RUN echo "######################" >> /etc/httpd/conf.d/slxtest.conf' >> /home/docker/ravi/Dockerfile 
+echo 'CMD ["/usr/sbin/httpd","-D","FOREGROUND"]' >> /home/docker/ravi/Dockerfile
