@@ -1,0 +1,130 @@
+
+
+
+### swap memory off #####   swapoff -a 
+### Disable  vim /etc/fstab    commant it 
+### Docker install for all nodes   version 19.3 or any of old one before 19.3 version 
+### master command --  kubeadm init 
+kubeadm init --pod-network-cidr=10.244.0.0/16 
+kubectl get nodes 
+copy 3 commands and run on terminal 
+
+
+############### networking #############################
+https://v1-16.docs.kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/
+
+https://docs.docker.com/engine/install/ubuntu/ #####docker installtion 
+https://linuxconfig.org/how-to-install-docker-in-rhel-8 
+
+####### kubernet ubuntu#############
+https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
+###########################
+Delete completely kubernetes 
+						https://stackoverflow.com/questions/56493883/how-to-join-worker-node-in-existing-cluster
+#########################################################################################
+	
+	########## Network commands 
+	
+	netstat -lnp | grep 
+	setenforce 0
+	sed -i 's/enforcing/disabled/g' /etc/selinux/config
+	grep disable /etc/selinux/config | grep -v '#'
+	reboot all nodes
+	install docker 
+	systemctl enable docker 
+	install kubeadm , kubelet, kubectl on all machines
+	systemctl enable kubelet && systemctl start kubelet
+	
+
+############## checking pods #####################
+kubectl get pods
+kubectl get pods -o wide   ### with ip it will show ############
+kubectl describe pod [pod name] ### Describe complite details of pod #########
+kubectl exec -it [pod name] -- /bin/sh  #### login into pod ############
+kubectl delete  pod [pod name ] ### Deleteing any pod ######
+
+########## Active cluster details ################ 
+kubectl config view --minify=true 
+#####################33333333333333
+	
+############# Kubernetes cluster info ############################
+kubectl cluster-info 
+################################
+	
+####### cluster details ######################################
+# kubectl config get-contexts
+
+## kubectl config get-clusters  [cluster details]
+
+$ kubectl config use-context [cluster name ]                [Switch cluster user] 
+
+$ kubectl get cs    [cluster health check ]
+
+kubectl run nginx --image=nginx:alpine
+
+#########################################################################
+
+kubectl run firstpod --generator=run-pod/v1 --image=coolgourav147/nginx-custom
+kubectl delete pods --all
+kubectl create -f myfirst.yml --dry-run
+kubectl apply -f myfirst.yml
+kubectl get pods -o wide
+kubectl get pods --show-labels
+kubectl edit pod firstpod
+kubectl exec firstpod env     [ master node side ]
+docker container exec -it d1a4593c55c3 env [ worker node side ]
+
+
+#######################################yaml####################################
+
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: firstpod
+  name: firstpod
+spec:
+  containers:
+  - image: coolgourav147/nginx-custom
+    env:
+      - name: myname
+        value: manish
+      - name: city
+        value: jaipur
+    name: firstpod
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+###############################################################################################################################################
+
+1: Introduction to Kubernetes 
+2: how to use single cluster node 
+3: How to create master Node and Worker Node 
+4: Connection Between Master and Worker Node
+5: Kubectl Service how to use 
+6: kubeadm with networking 
+7: Pod creation through command 
+8: Pod creation with yml file 
+9: Kubernetes basic command for services 
+10: How to set lebals in yml file 
+11: Setting up Kubernetes Cluster with Kubeadm
+12: Kubernetes cluster info
+13: Containers execution 
+14: Basic of yml file [how to create and some opetions]
+
+############################################################################################################################################
+
+Network error-solution  = echo "1" > /proc/sys/net/bridge/bridge-nf-call-iptables
+	
+	
+############################################################################################################################################
+Github links-
+		https://github.com/KamranAzeem/learn-kubernetes/blob/master/kubeadm/kubeadm-fedora-flannel.md
+		https://github.com/KamranAzeem/learn-kubernetes
+		https://github.com/KamranAzeem/kubernetes-katas/blob/master/04-init-and-multi-container-pods.md
+		https://metallb.universe.tf/    ### load balancer links
+		https://github.com/KamranAzeem/kubernetes-katas/tree/master/ingress-traefik/basic-setup-without-https     ###Trafic ingress controller
+		
+	
