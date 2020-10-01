@@ -1,0 +1,87 @@
+
+Site: friskills.com
+ssh-user-name: friskills.com
+ssh-passworld: Hrvk87r4sGrZ
+
+MySQL-User-Name: friskills
+MySQL-Passworld: LdtiVS5liP
+DataBasename: friskills
+
+
+
+
+<VirtualHost *:80>
+        ServerName		friskills.com
+        ServerAlias		www.friskills.com
+        DocumentRoot	/home/friskills.com/public_html
+        ErrorLog		/home/friskills.com/logs/error_log
+        TransferLog		/home/friskills.com/logs/transfer_log
+        AccessFileName  .htaccess
+</VirtualHost>
+
+
+
+rename in nagios 
+
+corp.skillupcentral.com
+skillup.swiss
+
+
+nagios plug-  /lib64/nagios/plugins
+ansible- /etc/ansible
+
+
+
+#####################################################
+site:  prime.slxlearning.com
+ssh-user-name: prime.slxlearning.com
+ssh-passworld: Hgtr4BeXlvyT
+MySQL-User-Name: prime_slx
+				
+MySQL-Passworld: HBwQ7CTqMF3fT
+DataBasename: prime_slx
+
+
+<VirtualHost *:80>
+        ServerName      prime.slxlearning.com
+        RewriteEngine on
+        ReWriteCond %{SERVER_PORT} !^443$
+        RewriteRule ^/(.*) https://prime.slxlearning.com/$1 [NC,R,L]
+</VirtualHost>
+
+<VirtualHost *:443>
+        SSLEngine On
+                SSLCertificateFile /etc/httpd/SSL/slxlearning.com_new/29fa16188e884969.crt
+                SSLCertificateKeyFile /etc/httpd/SSL/slxlearning.com_new/slxlearning.com.key
+                SSLCertificateChainFile /etc/httpd/SSL/slxlearning.com_new/gd_bundle-g2-g1.crt
+
+        DocumentRoot /home/prime.slxlearning.com/public_html
+        ServerName      prime.slxlearning.com
+        ErrorLog        /home/prime.slxlearning.com/logs/error_log
+        TransferLog     /home/prime.slxlearning.com/logs/access_log
+        AccessFileName .htaccess
+</VirtualHost>
+####################################################################
+
+
+site:  staging.perpetualtp.com
+ssh-user-name: staging.perpetualtp.com
+ssh-passworld: Ftjs4mhgcWC
+MySQL-User-Name: staging_perpetualtp
+				
+MySQL-Passworld: 3KK3qdW5
+DataBasename: staging_perpetualtp
+
+### staging.perpetualtp.com ###
+<VirtualHost *:80>
+  ServerName      staging.perpetualtp.com
+  DocumentRoot    /home/staging.perpetualtp.com/public_html
+  ErrorLog        /home/staging.perpetualtp.com/logs/staging.perpetualtp-error_log
+  TransferLog     /home/staging.perpetualtp.com/logs/staging.perpetualtp-access_log
+  AccessFileName  .htaccess
+</VirtualHost>
+
+
+
+
+
