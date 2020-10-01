@@ -1,0 +1,21 @@
+Jenkins with Maradb
+
+mkdir -p /home/docker/mariadb
+touch /home/docker/mariadb/Dockerfile
+chmod -R 775 /home/docker/mariadb/Dockerfile
+touch /home/docker/mariadb/db.sh
+
+sed -i '1a #!/bin/sh' /home/docker/mariadb/db.sh
+sed -i '3a Username="test33"' /home/docker/mariadb/db.sh
+
+
+sed -i '1a FROM baryonsit/mariadb:5.5' /home/docker/mariadb/Dockerfile
+sed -i '3a RUN yum -y update' /home/docker/mariadb/Dockerfile
+sed -i '5a RUN yum install -y lynx wget rsync vim bash-completion curl unzip net-tools' /home/docker/mariadb/Dockerfile
+sed -i '7a EXPOSE 3306' /home/docker/mariadb/Dockerfile
+sed -i '9a CMD ["mysqld"]' /home/docker/mariadb/Dockerfile
+
+
+Password="test11"
+DBName="test11"
+HPUP="--host=127.0.0.1 --port=3306 -uroot -pmysql"
