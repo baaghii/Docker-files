@@ -1,0 +1,35 @@
+
+
+
+[mariadb]
+name = MariaDB
+baseurl = http://yum.mariadb.org/5.5/rhel7-amd64/
+gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+gpgcheck=1
+~
+
+
+FROM centos:7
+
+RUN touch /etc/yum.repos.d/mariadb.repo
+RUN echo "[mariadb]" >> /etc/yum.repos.d/mariadb.repo
+RUN echo "name = MariaDB" >> /etc/yum.repos.d/mariadb.repo
+RUN echo "baseurl = http://yum.mariadb.org/5.5/rhel7-amd64/" >> /etc/yum.repos.d/mariadb.repo
+RUN echo "gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB" >> /etc/yum.repos.d/mariadb.repo
+RUN echo "gpgcheck=1" >> /etc/yum.repos.d/mariadb.repo
+
+RUN yum -y update
+
+
+RUN yum install -y  mariadb-server
+
+
+#### installing the basic packages
+RUN yum install -y lynx wget rsync vim bash-completion curl unzip net-tools
+#### customized my.cnf file for the project
+#RUN echo " " >> /etc/my.cnf
+RUN echo "[mysqld]" >> /etc/my.cnf
+
+#### Exporting the ports outside
+EXPOSE 3306
+#CMD ["mysqld"]
